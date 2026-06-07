@@ -105,12 +105,15 @@
         .hero-name {
             font-family: 'Great Vibes', cursive;
             font-size: clamp(3.2rem, 11vw, 6.5rem);
-            color: var(--brown);
             line-height: 1.1;
             margin: 14px 0;
-            text-shadow: 0 2px 18px rgba(173,235,179,.6);
+            background: linear-gradient(90deg, var(--brown) 0%, var(--gold-dark) 30%, var(--gold-light) 50%, var(--gold-dark) 70%, var(--brown) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
             opacity: 0;
-            animation: fadeUp .9s ease .9s forwards;
+            animation: fadeUp .9s ease .9s forwards, shimmer-text 7s linear 2.2s infinite;
         }
 
         .hero-date {
@@ -703,24 +706,150 @@
             .counter-val { font-size: 1.4rem; min-width: 24px; }
         }
 
-        /* ── INTRO OVERLAY ─────────────────────────────────────── */
+        /* ── SCROLL PROGRESS ───────────────────────────────────── */
+        #scroll-progress {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--gold-light), var(--gold), var(--gold-dark));
+            z-index: 8000;
+            transition: width .12s linear;
+            pointer-events: none;
+        }
+
+        /* ── SECTION NAV DOTS ──────────────────────────────────── */
+        #section-nav {
+            position: fixed;
+            right: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 7000;
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .6s ease;
+        }
+        #section-nav.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .nav-dot {
+            display: block;
+            width: 9px; height: 9px;
+            border-radius: 50%;
+            background: rgba(201,149,10,.25);
+            border: 1.5px solid rgba(201,149,10,.5);
+            cursor: pointer;
+            transition: all .3s ease;
+            position: relative;
+            text-decoration: none;
+        }
+        .nav-dot::before {
+            content: attr(data-label);
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            white-space: nowrap;
+            font-family: 'Lato', sans-serif;
+            font-size: .6rem;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            background: rgba(255,255,255,.92);
+            padding: 3px 8px;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.08);
+            opacity: 0;
+            transition: opacity .2s ease;
+            pointer-events: none;
+        }
+        .nav-dot:hover::before { opacity: 1; }
+        .nav-dot.active::before { opacity: 0; }
+        .nav-dot.active {
+            background: var(--gold);
+            border-color: var(--gold);
+            width: 11px; height: 11px;
+            box-shadow: 0 0 10px rgba(201,149,10,.45);
+        }
+        .nav-dot:hover:not(.active) {
+            background: var(--gold-light);
+            border-color: var(--gold);
+            transform: scale(1.25);
+        }
+        @media (max-width: 768px) {
+            #section-nav {
+                right: auto; top: auto;
+                bottom: 16px;
+                left: 50%;
+                transform: translateX(-50%);
+                flex-direction: row;
+                gap: 10px;
+                background: rgba(255,255,255,.75);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                padding: 7px 14px;
+                border-radius: 50px;
+                border: 1px solid rgba(201,149,10,.2);
+            }
+            .nav-dot::before { display: none; }
+        }
+
+        /* ── ENVELOPE INTRO OVERLAY ────────────────────────────── */
         .intro-overlay {
             position: fixed;
             inset: 0;
             z-index: 9999;
+            overflow: hidden;
+        }
+        /* Two panels that split apart on open */
+        .env-panel {
+            position: absolute;
+            left: 0; right: 0;
             background: linear-gradient(160deg, #FFFFFF 0%, #EAF8EE 40%, #D8F5DE 70%, #F0FBF2 100%);
+            z-index: 1;
+            transition: transform 1s cubic-bezier(0.85, 0, 0.15, 1);
+        }
+        .env-panel-top {
+            top: 0; height: 51%;
+            box-shadow: 0 8px 36px rgba(26,74,46,.1);
+        }
+        .env-panel-bottom { bottom: 0; height: 51%; }
+        .intro-overlay.opening .env-panel-top  { transform: translateY(-102%); }
+        .intro-overlay.opening .env-panel-bottom { transform: translateY(102%); }
+
+        /* Gold seal line between panels */
+        .env-seal {
+            position: absolute;
+            top: 50%; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201,149,10,.35) 20%, var(--gold-light) 50%, rgba(201,149,10,.35) 80%, transparent);
+            z-index: 1;
+            transform: translateY(-50%);
+            pointer-events: none;
+            transition: opacity .25s ease;
+        }
+        .intro-overlay.opening .env-seal { opacity: 0; }
+
+        /* Content wrapper (cross, name, button) above panels */
+        .intro-content {
+            position: relative;
+            z-index: 2;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
             padding: 40px 28px;
-            transition: opacity .9s ease;
+            width: 100%; height: 100%;
+            transition: opacity .4s ease .1s;
         }
-        .intro-overlay.fade-out {
-            opacity: 0;
-            pointer-events: none;
-        }
+        .intro-overlay.opening .intro-content { opacity: 0; }
+
         .intro-eyebrow {
             font-family: 'Lato', sans-serif;
             font-size: .7rem;
@@ -769,54 +898,106 @@
             55%      { box-shadow: 0 6px 28px rgba(201,149,10,.28), 0 0 0 18px rgba(201,149,10,0); }
         }
 
+        /* ── ENHANCED REVEALS ──────────────────────────────────── */
+        .reveal-left {
+            opacity: 0; transform: translateX(-28px);
+            transition: opacity .7s cubic-bezier(.25,.8,.25,1), transform .7s cubic-bezier(.25,.8,.25,1);
+        }
+        .reveal-right {
+            opacity: 0; transform: translateX(28px);
+            transition: opacity .7s cubic-bezier(.25,.8,.25,1), transform .7s cubic-bezier(.25,.8,.25,1);
+        }
+        .reveal-scale {
+            opacity: 0; transform: scale(.88);
+            transition: opacity .75s cubic-bezier(.25,.8,.25,1), transform .75s cubic-bezier(.25,.8,.25,1);
+        }
+        .reveal-left.in-view, .reveal-right.in-view, .reveal-scale.in-view {
+            opacity: 1; transform: none;
+        }
+
+        /* ── SECTION TITLE GRADIENT ─────────────────────────────── */
+        .section-title {
+            background: linear-gradient(135deg, var(--brown) 0%, var(--gold-dark) 60%, var(--brown) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ── KEYFRAMES ─────────────────────────────────────────── */
+        @keyframes shimmer-text {
+            0%   { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
         /* ── MÚSICA DE FONDO ───────────────────────────────────── */
     </style>
 </head>
 <body>
 
+<div id="scroll-progress"></div>
+
+<nav id="section-nav" aria-label="Secciones">
+    <a class="nav-dot active" href="#hero"      data-label="Inicio"           aria-label="Inicio"></a>
+    <a class="nav-dot"        href="#message"   data-label="Mensaje"          aria-label="Mensaje"></a>
+    <a class="nav-dot"        href="#events"    data-label="Eventos"          aria-label="Eventos"></a>
+    <a class="nav-dot"        href="#countdown" data-label="Cuenta Regresiva" aria-label="Cuenta Regresiva"></a>
+    <a class="nav-dot"        href="#rsvp"      data-label="Confirmar"        aria-label="Confirmar"></a>
+</nav>
+
 <!-- ═══════════════════════════════════════════════════════════════ INTRO -->
 <div class="intro-overlay" id="intro-overlay">
-    <svg class="corner corner-tl" viewBox="0 0 100 100" fill="none">
-        <path d="M8 92 L8 8 L92 8" stroke="#C9950A" stroke-width="2.5" stroke-linecap="round"/>
-        <path d="M18 92 L18 18 L92 18" stroke="#C9950A" stroke-width="1" stroke-linecap="round" opacity=".45"/>
-        <circle cx="8" cy="8" r="4.5" fill="#C9950A"/>
-    </svg>
-    <svg class="corner corner-tr" viewBox="0 0 100 100" fill="none">
-        <path d="M8 92 L8 8 L92 8" stroke="#C9950A" stroke-width="2.5" stroke-linecap="round"/>
-        <path d="M18 92 L18 18 L92 18" stroke="#C9950A" stroke-width="1" stroke-linecap="round" opacity=".45"/>
-        <circle cx="8" cy="8" r="4.5" fill="#C9950A"/>
-    </svg>
-    <svg class="corner corner-bl" viewBox="0 0 100 100" fill="none">
-        <path d="M8 92 L8 8 L92 8" stroke="#C9950A" stroke-width="2.5" stroke-linecap="round"/>
-        <path d="M18 92 L18 18 L92 18" stroke="#C9950A" stroke-width="1" stroke-linecap="round" opacity=".45"/>
-        <circle cx="8" cy="8" r="4.5" fill="#C9950A"/>
-    </svg>
-    <svg class="corner corner-br" viewBox="0 0 100 100" fill="none">
-        <path d="M8 92 L8 8 L92 8" stroke="#C9950A" stroke-width="2.5" stroke-linecap="round"/>
-        <path d="M18 92 L18 18 L92 18" stroke="#C9950A" stroke-width="1" stroke-linecap="round" opacity=".45"/>
-        <circle cx="8" cy="8" r="4.5" fill="#C9950A"/>
-    </svg>
 
-    <svg width="44" height="62" viewBox="0 0 52 72" fill="none" style="margin-bottom:22px">
-        <rect x="21" y="0"  width="10" height="72" rx="3" fill="#C9950A"/>
-        <rect x="0"  y="18" width="52" height="10" rx="3" fill="#C9950A"/>
-        <rect x="22" y="1"  width="8"  height="70" rx="2" fill="rgba(255,255,255,.18)"/>
-    </svg>
+    <!-- Panel superior del sobre -->
+    <div class="env-panel env-panel-top"></div>
+    <!-- Panel inferior del sobre -->
+    <div class="env-panel env-panel-bottom"></div>
+    <!-- Línea dorada de sello -->
+    <div class="env-seal"></div>
 
-    <div class="intro-eyebrow">Con la gracia de Dios</div>
-    <div class="intro-name">Erick Abraham</div>
-    <div class="intro-date">Primera Comunión &nbsp;·&nbsp; 25 de Julio, 2026</div>
-
-    <button class="intro-btn" onclick="openInvitation()">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(255,255,255,.85)" stroke="none">
-            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+    <!-- Contenido visible (encima de los paneles) -->
+    <div class="intro-content">
+        <svg class="corner corner-tl" viewBox="0 0 100 100" fill="none">
+            <path d="M8 92 L8 8 L92 8" stroke="#C9950A" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M18 92 L18 18 L92 18" stroke="#C9950A" stroke-width="1" stroke-linecap="round" opacity=".45"/>
+            <circle cx="8" cy="8" r="4.5" fill="#C9950A"/>
         </svg>
-        Abrir Invitación
-    </button>
+        <svg class="corner corner-tr" viewBox="0 0 100 100" fill="none">
+            <path d="M8 92 L8 8 L92 8" stroke="#C9950A" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M18 92 L18 18 L92 18" stroke="#C9950A" stroke-width="1" stroke-linecap="round" opacity=".45"/>
+            <circle cx="8" cy="8" r="4.5" fill="#C9950A"/>
+        </svg>
+        <svg class="corner corner-bl" viewBox="0 0 100 100" fill="none">
+            <path d="M8 92 L8 8 L92 8" stroke="#C9950A" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M18 92 L18 18 L92 18" stroke="#C9950A" stroke-width="1" stroke-linecap="round" opacity=".45"/>
+            <circle cx="8" cy="8" r="4.5" fill="#C9950A"/>
+        </svg>
+        <svg class="corner corner-br" viewBox="0 0 100 100" fill="none">
+            <path d="M8 92 L8 8 L92 8" stroke="#C9950A" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M18 92 L18 18 L92 18" stroke="#C9950A" stroke-width="1" stroke-linecap="round" opacity=".45"/>
+            <circle cx="8" cy="8" r="4.5" fill="#C9950A"/>
+        </svg>
+
+        <svg width="44" height="62" viewBox="0 0 52 72" fill="none" style="margin-bottom:22px">
+            <rect x="21" y="0"  width="10" height="72" rx="3" fill="#C9950A"/>
+            <rect x="0"  y="18" width="52" height="10" rx="3" fill="#C9950A"/>
+            <rect x="22" y="1"  width="8"  height="70" rx="2" fill="rgba(255,255,255,.18)"/>
+        </svg>
+
+        <div class="intro-eyebrow">Con la gracia de Dios</div>
+        <div class="intro-name">Erick Abraham</div>
+        <div class="intro-date">Primera Comunión &nbsp;·&nbsp; 25 de Julio, 2026</div>
+
+        <button class="intro-btn" onclick="openInvitation()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(255,255,255,.85)" stroke="none">
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+            </svg>
+            Abrir Invitación
+        </button>
+    </div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════ HERO -->
-<section class="hero">
+<section class="hero" id="hero">
 
     <div class="particles" id="particles"></div>
 
@@ -873,7 +1054,7 @@
 </section>
 
 <!-- ═════════════════════════════════════════════════════════ MESSAGE -->
-<section class="message-section">
+<section class="message-section" id="message">
     <div class="section-eyebrow reveal">Un momento sagrado</div>
 
     <div class="ornament reveal reveal-d1">
@@ -893,7 +1074,7 @@
 </section>
 
 <!-- ══════════════════════════════════════════════════════════ EVENTS -->
-<section class="events-section">
+<section class="events-section" id="events">
     <div style="text-align:center; max-width:860px; margin:0 auto;">
         <div class="section-eyebrow reveal">Los eventos</div>
         <div class="section-title reveal reveal-d1">Acompáñanos</div>
@@ -982,7 +1163,7 @@
 </section>
 
 <!-- ══════════════════════════════════════════════════════ COUNTDOWN -->
-<section class="countdown-section">
+<section class="countdown-section" id="countdown">
     <div class="section-eyebrow reveal">El gran día se acerca</div>
     <div class="section-title reveal reveal-d1">Cuenta Regresiva</div>
 
@@ -995,7 +1176,7 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════ RSVP -->
-<section class="rsvp-section">
+<section class="rsvp-section" id="rsvp">
     <div class="section-eyebrow reveal">Confirmación de asistencia</div>
     <div class="section-title reveal reveal-d1">¿Nos acompañas?</div>
     <p class="rsvp-deadline reveal reveal-d2">
@@ -1198,19 +1379,61 @@ _bgAudio.addEventListener('loadedmetadata', function () {
 function openInvitation() {
     var overlay = document.getElementById('intro-overlay');
     if (overlay) {
-        overlay.classList.add('fade-out');
+        overlay.classList.add('opening');
         setTimeout(function () {
             if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
-        }, 1000);
+            // Show section nav after overlay is gone
+            var nav = document.getElementById('section-nav');
+            if (nav) nav.classList.add('visible');
+        }, 1050);
     }
-    if (_bgPlayed) return;
-    if (_bgAudio.readyState >= 1 && _bgAudio.currentTime < 29) {
-        _bgAudio.currentTime = 30;
+    if (!_bgPlayed) {
+        if (_bgAudio.readyState >= 1 && _bgAudio.currentTime < 29) {
+            _bgAudio.currentTime = 30;
+        }
+        _bgAudio.play()
+                 .then(function () { _bgPlayed = true; })
+                 .catch(function () {});
     }
-    _bgAudio.play()
-             .then(function () { _bgPlayed = true; })
-             .catch(function () {});
 }
+
+// Scroll progress bar
+(function () {
+    var bar = document.getElementById('scroll-progress');
+    function updateBar() {
+        var scrolled = document.documentElement.scrollTop || document.body.scrollTop;
+        var total    = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        if (bar && total > 0) bar.style.width = (scrolled / total * 100) + '%';
+    }
+    window.addEventListener('scroll', updateBar, { passive: true });
+}());
+
+// Section nav: highlight active dot
+(function () {
+    var sections = ['hero','message','events','countdown','rsvp'];
+    var dots = {};
+    sections.forEach(function (id) {
+        var el = document.getElementById(id);
+        var dot = document.querySelector('.nav-dot[href="#' + id + '"]');
+        if (el && dot) dots[id] = { el: el, dot: dot };
+    });
+
+    var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                Object.values(dots).forEach(function (d) { d.dot.classList.remove('active'); });
+                var matched = Object.keys(dots).find(function (id) {
+                    return dots[id].el === entry.target;
+                });
+                if (matched) dots[matched].dot.classList.add('active');
+            }
+        });
+    }, { threshold: 0.35 });
+
+    sections.forEach(function (id) {
+        if (dots[id]) obs.observe(dots[id].el);
+    });
+}());
 
 // Pausar al cambiar de pestaña / minimizar; reanudar al volver
 document.addEventListener('visibilitychange', function () {
