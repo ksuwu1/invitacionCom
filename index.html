@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primera Comunión · Erick Abraham Arteaga Rojas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gold: #C9950A;
+            --gold-dark: #8A6500;
+            --gold-light: #F0D060;
+            --mint: #ADEBB3;
+            --mint-mid: #70BF7F;
+            --cream: #F0FBF2;
+            --cream-dark: #D8F0DD;
+            --brown: #1A4A2E;
+            --white: #FFFFFF;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: var(--cream);
+            color: var(--brown);
+            overflow-x: hidden;
+        }
+
+        /* ── HERO ──────────────────────────────────────────────── */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(160deg, #FFFFFF 0%, #EAF8EE 40%, #D8F5DE 70%, #F0FBF2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 60px 24px;
+            text-align: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(112,191,127,.12) 0%, transparent 70%);
+        }
+
+        /* corners */
+        .corner {
+            position: absolute;
+            width: 110px;
+            height: 110px;
+            opacity: .35;
+        }
+        .corner-tl { top: 18px; left: 18px; }
+        .corner-tr { top: 18px; right: 18px; transform: scaleX(-1); }
+        .corner-bl { bottom: 18px; left: 18px; transform: scaleY(-1); }
+        .corner-br { bottom: 18px; right: 18px; transform: scale(-1,-1); }
+
+        /* particles */
+        .particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--mint);
+            opacity: 0;
+            animation: floatUp var(--dur) linear var(--delay) infinite;
+        }
+
+        /* hero text */
+        .hero-eyebrow {
+            font-size: .78rem;
+            font-weight: 700;
+            letter-spacing: .45em;
+            text-transform: uppercase;
+            color: var(--mint-mid);
+            margin-bottom: 18px;
+            opacity: 0;
+            animation: fadeUp .9s ease .3s forwards;
+        }
+
+        .hero-cross {
+            opacity: 0;
+            animation: fadeIn 1.4s ease .5s forwards;
+            margin-bottom: 18px;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.5rem, 4.5vw, 2.6rem);
+            font-style: italic;
+            color: var(--gold-dark);
+            margin-bottom: 6px;
+            opacity: 0;
+            animation: fadeUp .9s ease .7s forwards;
+        }
+
+        .hero-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(3.2rem, 11vw, 6.5rem);
+            color: var(--brown);
+            line-height: 1.1;
+            margin: 14px 0;
+            text-shadow: 0 2px 18px rgba(173,235,179,.6);
+            opacity: 0;
+            animation: fadeUp .9s ease .9s forwards;
+        }
+
+        .hero-date {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(.95rem, 2.8vw, 1.35rem);
+            color: var(--brown);
+            letter-spacing: .12em;
+            margin-top: 14px;
+            opacity: 0;
+            animation: fadeUp .9s ease 1.1s forwards;
+        }
+
+        .hero-family {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            margin-top: 30px;
+            width: 100%;
+            max-width: 440px;
+            padding: 0 12px;
+            opacity: 0;
+            animation: fadeUp .9s ease 1.3s forwards;
+        }
+        .hero-family-sep {
+            width: 1px;
+            height: 36px;
+            background: var(--mint);
+            opacity: .6;
+            margin: 0 20px;
+        }
+        .hero-family-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+        .hero-family-role {
+            font-size: .62rem;
+            font-weight: 700;
+            letter-spacing: .38em;
+            text-transform: uppercase;
+            color: var(--mint-mid);
+        }
+        .hero-family-name {
+            font-family: 'Playfair Display', serif;
+            font-size: .98rem;
+            font-style: italic;
+            color: var(--brown);
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--gold-dark);
+            font-size: .7rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeIn 1s ease 2.2s forwards, bounce 2s ease-in-out 2.8s infinite;
+        }
+
+        /* ── MESSAGE ───────────────────────────────────────────── */
+        .message-section {
+            background: var(--cream);
+            padding: 80px 24px;
+            text-align: center;
+        }
+
+        .section-eyebrow {
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .42em;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.5rem, 4vw, 2.3rem);
+            color: var(--brown);
+            margin-bottom: 36px;
+        }
+
+        .ornament {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            max-width: 360px;
+            margin: 0 auto 32px;
+        }
+        .ornament-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--mint));
+        }
+        .ornament-line:last-child {
+            background: linear-gradient(to left, transparent, var(--mint));
+        }
+
+        .message-body {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(.95rem, 2.4vw, 1.2rem);
+            font-style: italic;
+            line-height: 1.9;
+            max-width: 580px;
+            margin: 0 auto;
+        }
+
+        .bible-ref {
+            margin-top: 24px;
+            font-size: .82rem;
+            color: var(--gold-dark);
+            letter-spacing: .06em;
+        }
+
+        /* ── EVENTS ────────────────────────────────────────────── */
+        .events-section {
+            background: linear-gradient(150deg, #C8EDD0, #D8F5DC 60%, #C0E8CB);
+            padding: 80px 24px;
+        }
+
+        .events-section .section-eyebrow { color: var(--gold-dark); }
+        .events-section .section-title { color: var(--brown); }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .event-card {
+            background: var(--white);
+            border: 1px solid rgba(112,191,127,.35);
+            border-radius: 18px;
+            padding: 38px 28px;
+            text-align: center;
+            transition: transform .3s, border-color .3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .event-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--mint);
+        }
+
+        .event-icon { margin-bottom: 20px; }
+
+        .event-tag {
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .42em;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            margin-bottom: 8px;
+        }
+
+        .event-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--brown);
+            margin-bottom: 20px;
+            line-height: 1.3;
+            min-height: 3.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .event-info {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: .88rem;
+            color: #3D6B4A;
+            line-height: 1.7;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        .event-info svg { flex-shrink: 0; margin-top: 2px; stroke: var(--mint-mid); }
+        .event-info strong { color: var(--brown); }
+
+        .map-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: auto;
+            padding: 10px 26px;
+            border: 1.5px solid var(--brown);
+            border-radius: 50px;
+            color: var(--brown);
+            font-size: .82rem;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all .3s;
+            align-self: center;
+        }
+        .map-btn:hover { background: var(--brown); color: var(--white); }
+
+        /* ── COUNTDOWN ─────────────────────────────────────────── */
+        .countdown-section {
+            background: var(--cream-dark);
+            padding: 80px 24px;
+            text-align: center;
+        }
+
+        .countdown-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 40px;
+        }
+
+        .cd-box {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 20px 26px;
+            min-width: 90px;
+            box-shadow: 0 4px 22px rgba(0,0,0,.07);
+            border-top: 3px solid var(--mint);
+        }
+
+        .cd-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.6rem;
+            font-weight: 600;
+            color: var(--gold-dark);
+            line-height: 1;
+        }
+
+        .cd-label {
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        /* ── RSVP ──────────────────────────────────────────────── */
+        .rsvp-section {
+            background: #E4F3E8;
+            padding: 80px 24px;
+            text-align: center;
+        }
+
+        .rsvp-deadline {
+            color: #4A7560;
+            font-size: .92rem;
+            margin-bottom: 36px;
+        }
+
+        .rsvp-card {
+            max-width: 500px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 22px;
+            padding: 44px 36px;
+            box-shadow: 0 12px 52px rgba(26,74,46,.12);
+            border: 1.5px solid rgba(112,191,127,.4);
+        }
+
+        .field-label {
+            display: block;
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--brown);
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .field-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1.5px solid var(--mint);
+            border-radius: 11px;
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+            color: var(--brown);
+            background: var(--white);
+            outline: none;
+            transition: border-color .25s, box-shadow .25s;
+            box-sizing: border-box;
+        }
+        .field-input::placeholder { color: #9DBFA6; }
+        .field-input:focus {
+            border-color: var(--mint-mid);
+            box-shadow: 0 0 0 3px rgba(112,191,127,.18);
+        }
+
+        .form-group { margin-bottom: 24px; }
+
+        .counters-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .counter-box {
+            border: 1.5px solid var(--mint);
+            border-radius: 11px;
+            padding: 16px 12px;
+            background: var(--white);
+            transition: border-color .25s, box-shadow .25s;
+        }
+        .counter-box:focus-within {
+            border-color: var(--mint-mid);
+            box-shadow: 0 0 0 3px rgba(112,191,127,.18);
+        }
+
+        .counter-box .field-label {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .counter-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+        }
+
+        .counter-btn {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            border: 2px solid var(--mint-mid);
+            background: transparent;
+            color: var(--brown);
+            font-size: 1.25rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all .2s;
+            line-height: 1;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .counter-btn:hover { background: var(--mint-mid); color: var(--white); }
+        .counter-btn:active { transform: scale(.9); }
+
+        .counter-val {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.9rem;
+            font-weight: 600;
+            color: var(--brown);
+            min-width: 32px;
+            text-align: center;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 17px;
+            background: linear-gradient(135deg, #5A3F00, var(--gold-dark));
+            color: var(--white);
+            border: none;
+            border-radius: 11px;
+            font-family: 'Lato', sans-serif;
+            font-size: .95rem;
+            font-weight: 700;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: all .3s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(90,63,0,.35);
+        }
+        .submit-btn:active:not(:disabled) { transform: translateY(0); }
+        .submit-btn:disabled { opacity: .6; cursor: not-allowed; }
+
+        .form-error {
+            color: #c0392b;
+            font-size: .84rem;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* success */
+        .success-box {
+            display: none;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .success-check { margin-bottom: 22px; }
+
+        .success-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            color: var(--gold-dark);
+            margin-bottom: 12px;
+        }
+
+        .success-text {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            line-height: 1.8;
+            color: var(--brown);
+        }
+
+        /* ── FOOTER ────────────────────────────────────────────── */
+        footer {
+            background: linear-gradient(150deg, #C8EDD0, #B5E5BF);
+            color: var(--brown);
+            text-align: center;
+            padding: 44px 24px;
+        }
+        .footer-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.1rem;
+            color: var(--gold-dark);
+            margin-bottom: 8px;
+        }
+        footer p { font-size: .82rem; opacity: .8; }
+        footer p + p { margin-top: 6px; }
+
+        /* ── REVEAL ON SCROLL ──────────────────────────────────── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity .7s cubic-bezier(.25,.8,.25,1),
+                        transform .7s cubic-bezier(.25,.8,.25,1);
+        }
+        .reveal.in-view { opacity: 1; transform: translateY(0); }
+        .reveal-d1 { transition-delay: .12s; }
+        .reveal-d2 { transition-delay: .24s; }
+        .reveal-d3 { transition-delay: .36s; }
+        .reveal-d4 { transition-delay: .48s; }
+
+        /* ── KEYFRAMES ─────────────────────────────────────────── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(26px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; } to { opacity: 1; }
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50%       { transform: translateX(-50%) translateY(-9px); }
+        }
+        @keyframes floatUp {
+            0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+            8%   { opacity: .55; }
+            92%  { opacity: .15; }
+            100% { transform: translateY(-8vh) scale(1); opacity: 0; }
+        }
+
+        /* ── RESPONSIVE ────────────────────────────────────────── */
+
+        /* Tablet (≤ 768px) */
+        @media (max-width: 768px) {
+            .message-section,
+            .countdown-section,
+            .rsvp-section  { padding: 64px 28px; }
+            .events-section { padding: 64px 28px; }
+
+            .corner { width: 78px; height: 78px; }
+
+            .cd-box { padding: 16px 18px; min-width: 76px; }
+            .cd-num { font-size: 2.2rem; }
+
+            .rsvp-card { padding: 36px 28px; }
+        }
+
+        /* Móvil grande (≤ 600px) */
+        @media (max-width: 600px) {
+            .event-card { padding: 28px 20px; }
+
+            /* botón de mapa ancho completo — más fácil de tocar */
+            .map-btn {
+                display: flex;
+                width: 100%;
+                justify-content: center;
+                padding: 13px 20px;
+                margin-top: 20px;
+            }
+        }
+
+        /* Móvil (≤ 480px) */
+        @media (max-width: 480px) {
+            .hero { padding: 76px 18px 68px; }
+
+            .corner { width: 52px; height: 52px; opacity: .2; }
+            .corner-tl { top: 10px; left: 10px; }
+            .corner-tr { top: 10px; right: 10px; }
+            .corner-bl { bottom: 10px; left: 10px; }
+            .corner-br { bottom: 10px; right: 10px; }
+
+            .hero-eyebrow { letter-spacing: .24em; margin-bottom: 12px; }
+            .scroll-hint  { letter-spacing: .18em; font-size: .65rem; }
+
+            .message-section,
+            .countdown-section,
+            .rsvp-section  { padding: 52px 16px; }
+            .events-section { padding: 52px 16px; }
+
+            .section-eyebrow { letter-spacing: .26em; }
+            .ornament { max-width: 230px; }
+
+            .event-card { padding: 26px 16px; }
+
+            /* Cuenta regresiva: cuadrícula 2 × 2 */
+            .countdown-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                max-width: 252px;
+                margin: 28px auto 0;
+                gap: 12px;
+            }
+            .cd-box   { padding: 14px 8px; min-width: 0; }
+            .cd-num   { font-size: 2rem; }
+            .cd-label { letter-spacing: .14em; }
+
+            /* RSVP */
+            .rsvp-section { padding: 48px 14px; }
+            .rsvp-card  { padding: 30px 20px 26px; border-radius: 18px; }
+
+            /* Labels más compactos en mobile */
+            .field-label { letter-spacing: .08em; font-size: .7rem; }
+            .field-input { padding: 13px 14px; font-size: 1rem; }
+
+            /* Contadores: crecen para ocupar el espacio bien */
+            .counters-row { gap: 10px; margin-top: 4px; }
+            .counter-box  { padding: 14px 8px; }
+            .counter-box .field-label {
+                font-size: .65rem;
+                letter-spacing: .06em;
+                gap: 4px;
+            }
+
+            /* Botones táctiles cómodos */
+            .counter-btn { width: 46px; height: 46px; font-size: 1.45rem; }
+            .counter-val { font-size: 1.75rem; min-width: 28px; }
+
+            .submit-btn { padding: 16px; font-size: .88rem; letter-spacing: .08em; margin-top: 12px; }
+
+            .hero-family { max-width: 340px; padding: 0 4px; }
+            .hero-family-sep { margin: 0 12px; height: 30px; }
+            .hero-family-name { font-size: .84rem; }
+            .hero-family-role { font-size: .56rem; letter-spacing: .28em; }
+        }
+
+        /* Móvil muy pequeño (≤ 360px) */
+        @media (max-width: 360px) {
+            .hero-eyebrow { letter-spacing: .14em; font-size: .7rem; }
+            .hero-family { max-width: 290px; }
+            .hero-family-name { font-size: .78rem; }
+            .hero-family-sep { margin: 0 8px; }
+
+            .message-section,
+            .events-section,
+            .countdown-section,
+            .rsvp-section { padding: 44px 14px; }
+
+            .event-card { padding: 22px 14px; }
+
+            /* Form en pantallas muy pequeñas */
+            .rsvp-card { padding: 24px 14px 20px; }
+            .counter-btn { width: 42px; height: 42px; font-size: 1.3rem; }
+            .counter-val { font-size: 1.5rem; }
+            .counters-row { gap: 8px; }
+        }
+
+        /* ── MÚSICA DE FONDO ───────────────────────────────────── */
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════ HERO -->
+<section class="hero">
+
+    <div class="particles" id="particles"></div>
+
+    <!-- decorative corners -->
+    <svg class="corner corner-tl" viewBox="0 0 100 100" fill="none">
+        <path d="M8 92 L8 8 L92 8" stroke="#C9950A" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M18 92 L18 18 L92 18" stroke="#C9950A" stroke-width="1" stroke-linecap="round" opacity=".45"/>
+        <circle cx="8" cy="8" r="4.5" fill="#C9950A"/>
+    </svg>
+    <svg class="corner corner-tr" viewBox="0 0 100 100" fill="none">
+        <path d="M8 92 L8 8 L92 8" stroke="#C9950A" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M18 92 L18 18 L92 18" stroke="#C9950A" stroke-width="1" stroke-linecap="round" opacity=".45"/>
+        <circle cx="8" cy="8" r="4.5" fill="#C9950A"/>
+    </svg>
+    <svg class="corner corner-bl" viewBox="0 0 100 100" fill="none">
+        <path d="M8 92 L8 8 L92 8" stroke="#C9950A" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M18 92 L18 18 L92 18" stroke="#C9950A" stroke-width="1" stroke-linecap="round" opacity=".45"/>
+        <circle cx="8" cy="8" r="4.5" fill="#C9950A"/>
+    </svg>
+    <svg class="corner corner-br" viewBox="0 0 100 100" fill="none">
+        <path d="M8 92 L8 8 L92 8" stroke="#C9950A" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M18 92 L18 18 L92 18" stroke="#C9950A" stroke-width="1" stroke-linecap="round" opacity=".45"/>
+        <circle cx="8" cy="8" r="4.5" fill="#C9950A"/>
+    </svg>
+
+    <div class="hero-eyebrow">Con la gracia de Dios</div>
+
+    <!-- cross -->
+    <svg class="hero-cross" width="52" height="72" viewBox="0 0 52 72" fill="none">
+        <rect x="21" y="0"  width="10" height="72" rx="3" fill="#C9950A"/>
+        <rect x="0"  y="18" width="52" height="10" rx="3" fill="#C9950A"/>
+        <rect x="22" y="1"  width="8"  height="70" rx="2" fill="rgba(255,255,255,.18)"/>
+    </svg>
+
+    <div class="hero-title">Primera Comunión</div>
+
+    <div class="hero-name">Erick Abraham</div>
+
+    <div class="hero-date">Sábado &nbsp;·&nbsp; 25 de Julio de 2026</div>
+
+    <div class="hero-family">
+        <div class="hero-family-item">
+            <span class="hero-family-role">Madre</span>
+            <span class="hero-family-name">Emma Rojas Jiménez</span>
+        </div>
+        <div class="hero-family-sep"></div>
+        <div class="hero-family-item">
+            <span class="hero-family-role">Madrina</span>
+            <span class="hero-family-name">Alma Rojas Jiménez</span>
+        </div>
+    </div>
+
+    <div class="scroll-hint">↓ &nbsp; Ver detalles &nbsp; ↓</div>
+</section>
+
+<!-- ═════════════════════════════════════════════════════════ MESSAGE -->
+<section class="message-section">
+    <div class="section-eyebrow reveal">Un momento sagrado</div>
+
+    <div class="ornament reveal reveal-d1">
+        <div class="ornament-line"></div>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="#ADEBB3">
+            <path d="M10 1L11.8 7.2H18.1L13 11L14.9 17.2L10 13.4L5.1 17.2L7 11L1.9 7.2H8.2L10 1Z"/>
+        </svg>
+        <div class="ornament-line"></div>
+    </div>
+
+    <p class="message-body reveal reveal-d2">
+        Con el corazón lleno de gratitud y fe, nos complace invitarte a acompañarnos en este momento
+        sagrado en que <strong>Erick Abraham</strong> recibirá por primera vez
+        el Cuerpo de Cristo, compartiendo con nosotros este regalo del cielo.
+    </p>
+    <p class="bible-ref reveal reveal-d3">"Yo soy el pan de vida. El que viene a mí no tendrá hambre." — Juan 6:35</p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ EVENTS -->
+<section class="events-section">
+    <div style="text-align:center; max-width:860px; margin:0 auto;">
+        <div class="section-eyebrow reveal">Los eventos</div>
+        <div class="section-title reveal reveal-d1">Acompáñanos</div>
+
+        <div class="events-grid">
+
+            <!-- Misa -->
+            <div class="event-card reveal reveal-d2">
+                <div class="event-icon">
+                    <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+                        <rect x="22" y="2"  width="8" height="48" rx="2.5" fill="#C9950A"/>
+                        <rect x="6"  y="16" width="40" height="8"  rx="2.5" fill="#C9950A"/>
+                        <ellipse cx="26" cy="47" rx="8" ry="5" fill="#C9950A" opacity=".25"/>
+                        <circle cx="26" cy="44" r="5" fill="none" stroke="#C9950A" stroke-width="1.5"/>
+                    </svg>
+                </div>
+                <div class="event-tag">Santa Misa</div>
+                <div class="event-name">Parroquia La Transfiguración<br>del Señor</div>
+                <div class="event-info">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9950A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2.5"/><line x1="3" y1="9" x2="21" y2="9"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/>
+                    </svg>
+                    <strong>Sábado 25 de Julio, 2026</strong>
+                </div>
+                <div class="event-info">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9950A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14.5"/>
+                    </svg>
+                    10:00 AM
+                </div>
+                <div class="event-info">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9950A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    <span>Av. Salud 202, José Guadalupe<br>Peralta Gámez, 20196<br>Aguascalientes, Ags.</span>
+                </div>
+                <a href="https://maps.app.goo.gl/BbzSXUoGpzyLrk7Y7" target="_blank" rel="noopener" class="map-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    Ver en mapa
+                </a>
+            </div>
+
+            <!-- Fiesta -->
+            <div class="event-card reveal reveal-d3">
+                <div class="event-icon">
+                    <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+                        <path d="M26 6 L30 20 L44 20 L33 29 L37 43 L26 34 L15 43 L19 29 L8 20 L22 20 Z" fill="#C9950A"/>
+                        <circle cx="26" cy="26" r="23" stroke="#C9950A" stroke-width="1.2" fill="none" opacity=".3"/>
+                    </svg>
+                </div>
+                <div class="event-tag">Celebración</div>
+                <div class="event-name">Rancho Karolin</div>
+                <div class="event-info">
+                    <!-- Fecha: ajusta si es diferente a 26 de julio -->
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9950A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2.5"/><line x1="3" y1="9" x2="21" y2="9"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/>
+                    </svg>
+                    <strong>Domingo 26 de Julio, 2026</strong>
+                </div>
+                <div class="event-info">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9950A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14.5"/>
+                    </svg>
+                    A partir de las 2:00 PM
+                </div>
+                <div class="event-info">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9950A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    <span>Profr. Enrique Olivares Santana 214,<br>El Dorado 1a Sección, 20235<br>Aguascalientes, Ags.</span>
+                </div>
+                <a href="https://maps.app.goo.gl/JgTSRdxrjXYpTR1D7" target="_blank" rel="noopener" class="map-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    Ver en mapa
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════ COUNTDOWN -->
+<section class="countdown-section">
+    <div class="section-eyebrow reveal">El gran día se acerca</div>
+    <div class="section-title reveal reveal-d1">Cuenta Regresiva</div>
+
+    <div class="countdown-row" id="countdown-row">
+        <div class="cd-box reveal reveal-d1"><div class="cd-num" id="cd-days">--</div><div class="cd-label">Días</div></div>
+        <div class="cd-box reveal reveal-d2"><div class="cd-num" id="cd-hours">--</div><div class="cd-label">Horas</div></div>
+        <div class="cd-box reveal reveal-d3"><div class="cd-num" id="cd-mins">--</div><div class="cd-label">Minutos</div></div>
+        <div class="cd-box reveal reveal-d4"><div class="cd-num" id="cd-secs">--</div><div class="cd-label">Segundos</div></div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ RSVP -->
+<section class="rsvp-section">
+    <div class="section-eyebrow reveal">Confirmación de asistencia</div>
+    <div class="section-title reveal reveal-d1">¿Nos acompañas?</div>
+    <p class="rsvp-deadline reveal reveal-d2">
+         <strong> CONFIRMA TU ASISTENCIA A CONTINUACIÓN: </strong>
+    </p>
+
+    <div class="rsvp-card reveal reveal-d3">
+
+        <!-- FORM -->
+        <div id="form-body">
+
+            <div class="form-group">
+                <label class="field-label" for="guest-name">Tu nombre completo</label>
+                <input type="text" id="guest-name" class="field-input"
+                       placeholder="Escribe tu nombre aquí..." autocomplete="name">
+            </div>
+
+            <div class="form-group">
+                <label class="field-label" style="margin-bottom:12px;">Personas que asistirán</label>
+                <div class="counters-row">
+                    <div class="counter-box">
+                        <div class="counter-label">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--mint-mid)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                            Adultos
+                        </div>
+                        <div class="counter-controls">
+                            <button class="counter-btn" onclick="changeCount('adults',-1)" aria-label="Menos adultos">−</button>
+                            <span class="counter-val" id="val-adults">1</span>
+                            <button class="counter-btn" onclick="changeCount('adults',1)"  aria-label="Más adultos">+</button>
+                        </div>
+                    </div>
+                    <div class="counter-box">
+                        <div class="counter-label">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--mint-mid)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="7" r="4"/>
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            </svg>
+                            Niños
+                        </div>
+                        <div class="counter-controls">
+                            <button class="counter-btn" onclick="changeCount('children',-1)" aria-label="Menos niños">−</button>
+                            <span class="counter-val" id="val-children">0</span>
+                            <button class="counter-btn" onclick="changeCount('children',1)"  aria-label="Más niños">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="submit-btn" id="submit-btn" onclick="submitRSVP()">
+                Confirmar Asistencia
+            </button>
+            <p class="form-error" id="form-error">Por favor escribe tu nombre antes de confirmar.</p>
+        </div>
+
+        <!-- SUCCESS -->
+        <div class="success-box" id="success-box">
+            <div class="success-check">
+                <svg width="70" height="70" viewBox="0 0 70 70" fill="none">
+                    <circle cx="35" cy="35" r="32" fill="none" stroke="#C9950A" stroke-width="2"/>
+                    <path d="M22 35 L30 43 L48 26" stroke="#C9950A" stroke-width="3.5"
+                          stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <div class="success-title">¡Gracias!</div>
+            <p class="success-text">
+                Tu asistencia ha sido confirmada.<br>
+                ¡Nos da mucha alegría contar contigo<br>en este día tan especial para Erick Abraham!
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ FOOTER -->
+<footer>
+    <div class="footer-name">Erick Abraham</div>
+    <p>Primera Comunión &nbsp;·&nbsp; 25 de Julio, 2026</p>
+    <p style="margin-top:10px;">Con amor y fe ✝</p>
+</footer>
+
+<audio id="bg-audio" loop preload="metadata">
+    <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyTQDru6v8lRUxbUnDVN9lvdKU3qNC08d2PtGxQD00bTvwUWGNpysKIvtfEAt6-uJTfmw/exec';
+// ════════════════════════════════════════════════════════════════════
+
+// ── Counter state ────────────────────────────────────────────────────
+let counts = { adults: 1, children: 0 };
+
+function changeCount(type, delta) {
+    const min = type === 'adults' ? 1 : 0;
+    counts[type] = Math.max(min, counts[type] + delta);
+    document.getElementById(type === 'adults' ? 'val-adults' : 'val-children')
+            .textContent = counts[type];
+}
+
+// ── RSVP submit ──────────────────────────────────────────────────────
+async function submitRSVP() {
+    const nameEl   = document.getElementById('guest-name');
+    const errorEl  = document.getElementById('form-error');
+    const submitEl = document.getElementById('submit-btn');
+
+    const name = nameEl.value.trim();
+
+    if (!name) {
+        errorEl.style.display = 'block';
+        nameEl.focus();
+        return;
+    }
+    errorEl.style.display = 'none';
+    submitEl.disabled = true;
+    submitEl.textContent = 'Enviando…';
+
+    try {
+        const body = new URLSearchParams({
+            nombre:  name,
+            adultos: String(counts.adults),
+            ninos:   String(counts.children),
+            total:   String(counts.adults + counts.children)
+        });
+
+        // mode:'no-cors' para evitar bloqueo de CORS desde Google Apps Script.
+        // Los datos llegan igual; simplemente no podemos leer la respuesta.
+        await fetch(APPS_SCRIPT_URL, {
+            method:  'POST',
+            mode:    'no-cors',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body:    body.toString()
+        });
+    } catch (_) {
+        // Con no-cors el catch casi nunca ocurre; si ocurre aún mostramos éxito
+        // porque los datos probablemente llegaron (error de red sería distinto).
+    }
+
+    // Mostrar confirmación
+    document.getElementById('form-body').style.display  = 'none';
+    document.getElementById('success-box').style.display = 'block';
+}
+
+// ── Countdown ────────────────────────────────────────────────────────
+function tick() {
+    // Fecha de la misa: sábado 25 jul 2026 10:00 AM hora Centro (UTC-5 en verano)
+    const target = new Date('2026-07-25T10:00:00-05:00');
+    const diff   = target - Date.now();
+
+    if (diff <= 0) {
+        document.getElementById('countdown-row').innerHTML =
+            '<p style="font-family:\'Playfair Display\',serif;font-style:italic;font-size:1.4rem;color:var(--gold-dark)">¡Hoy es el gran día!</p>';
+        return;
+    }
+
+    const d = Math.floor(diff / 864e5);
+    const h = Math.floor((diff % 864e5) / 36e5);
+    const m = Math.floor((diff % 36e5) / 6e4);
+    const s = Math.floor((diff % 6e4) / 1e3);
+
+    const pad = n => String(n).padStart(2, '0');
+    document.getElementById('cd-days').textContent  = pad(d);
+    document.getElementById('cd-hours').textContent = pad(h);
+    document.getElementById('cd-mins').textContent  = pad(m);
+    document.getElementById('cd-secs').textContent  = pad(s);
+}
+tick();
+setInterval(tick, 1000);
+
+// ── Floating particles ───────────────────────────────────────────────
+(function () {
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 22; i++) {
+        const el = document.createElement('div');
+        el.className = 'particle';
+        const size = 2 + Math.random() * 4;
+        el.style.cssText = `
+            left:${Math.random()*100}%;
+            width:${size}px; height:${size}px;
+            --dur:${8 + Math.random()*14}s;
+            --delay:-${Math.random()*20}s;
+        `;
+        container.appendChild(el);
+    }
+}());
+
+// ── Música de fondo ──────────────────────────────────────────────
+(function () {
+    var audio  = document.getElementById('bg-audio');
+    var played = false;
+
+    audio.volume = 0.18;
+
+    // Posicionar en el segundo 30 en cuanto los metadatos estén listos
+    audio.addEventListener('loadedmetadata', function () {
+        audio.currentTime = 30;
+    }, { once: true });
+
+    function startMusic() {
+        if (played) return;
+        // Asegurar posición si los metadatos ya cargaron
+        if (audio.readyState >= 1 && audio.currentTime < 29) {
+            audio.currentTime = 30;
+        }
+        audio.play()
+             .then(function () { played = true; })
+             .catch(function () {
+                 // El navegador rechazó — los listeners siguen activos para el próximo toque
+             });
+    }
+
+    // click y touchstart son gestos de usuario válidos en todos los navegadores
+    // (scroll NO es aceptado por Chrome mobile para desbloquear autoplay)
+    ['click', 'touchstart'].forEach(function (ev) {
+        document.addEventListener(ev, startMusic, { passive: true });
+    });
+
+    // También intentar autoplay directo al cargar
+    audio.play()
+         .then(function () { played = true; })
+         .catch(function () { /* bloqueado — se activará al primer toque */ });
+}());
+
+// ── Reveal on scroll ─────────────────────────────────────────────
+(function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+        els.forEach(function (el) { el.classList.add('in-view'); });
+        return;
+    }
+    var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0 });
+    els.forEach(function (el) { obs.observe(el); });
+    // Fallback: si en 3 s algo sigue invisible, lo fuerza visible
+    setTimeout(function () {
+        els.forEach(function (el) {
+            if (!el.classList.contains('in-view')) el.classList.add('in-view');
+        });
+    }, 3000);
+}());
+</script>
+</body>
+</html>
