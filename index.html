@@ -22,7 +22,10 @@
             --white: #FFFFFF;
         }
 
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
 
         body {
             font-family: 'Lato', sans-serif;
@@ -33,7 +36,8 @@
 
         /* ── HERO ──────────────────────────────────────────────── */
         .hero {
-            min-height: 100vh;
+            height: 100svh;
+            height: 100vh;
             background: linear-gradient(160deg, #FFFFFF 0%, #EAF8EE 40%, #D8F5DE 70%, #F0FBF2 100%);
             display: flex;
             flex-direction: column;
@@ -41,8 +45,9 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
-            padding: 60px 24px;
+            padding: 60px 24px 90px;
             text-align: center;
+            scroll-snap-align: start;
         }
 
         .hero::before {
@@ -180,8 +185,16 @@
         /* ── MESSAGE ───────────────────────────────────────────── */
         .message-section {
             background: var(--cream);
-            padding: 80px 24px;
+            padding: 80px 24px 90px;
             text-align: center;
+            min-height: 100svh;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            scroll-snap-align: start;
         }
 
         .section-eyebrow {
@@ -235,7 +248,15 @@
         /* ── EVENTS ────────────────────────────────────────────── */
         .events-section {
             background: linear-gradient(150deg, #C8EDD0, #D8F5DC 60%, #C0E8CB);
-            padding: 80px 24px;
+            padding: 80px 24px 90px;
+            min-height: 100svh;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            scroll-snap-align: start;
         }
 
         .events-section .section-eyebrow { color: var(--gold-dark); }
@@ -322,8 +343,16 @@
         /* ── COUNTDOWN ─────────────────────────────────────────── */
         .countdown-section {
             background: var(--cream-dark);
-            padding: 80px 24px;
+            padding: 80px 24px 90px;
             text-align: center;
+            min-height: 100svh;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            scroll-snap-align: start;
         }
 
         .countdown-row {
@@ -365,6 +394,14 @@
             background: #E4F3E8;
             padding: 80px 24px;
             text-align: center;
+            min-height: 100svh;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            scroll-snap-align: start;
         }
 
         .rsvp-deadline {
@@ -806,34 +843,25 @@
             z-index: 9999;
             overflow: hidden;
         }
-        /* Two panels that split apart on open */
+        /* Two VERTICAL curtain panels that slide left/right on open */
         .env-panel {
             position: absolute;
-            left: 0; right: 0;
-            background: linear-gradient(160deg, #FFFFFF 0%, #EAF8EE 40%, #D8F5DE 70%, #F0FBF2 100%);
+            top: 0; bottom: 0;
+            background: linear-gradient(200deg, #FFFFFF 0%, #EAF8EE 35%, #D8F5DE 65%, #F0FBF2 100%);
             z-index: 1;
-            transition: transform 1s cubic-bezier(0.85, 0, 0.15, 1);
+            transition: transform 1.05s cubic-bezier(0.85, 0, 0.15, 1);
         }
-        .env-panel-top {
-            top: 0; height: 51%;
-            box-shadow: 0 8px 36px rgba(26,74,46,.1);
+        .env-panel-left {
+            left: 0; width: 51%;
+            box-shadow: 8px 0 32px rgba(26,74,46,.09);
         }
-        .env-panel-bottom { bottom: 0; height: 51%; }
-        .intro-overlay.opening .env-panel-top  { transform: translateY(-102%); }
-        .intro-overlay.opening .env-panel-bottom { transform: translateY(102%); }
-
-        /* Gold seal line between panels */
-        .env-seal {
-            position: absolute;
-            top: 50%; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(201,149,10,.35) 20%, var(--gold-light) 50%, rgba(201,149,10,.35) 80%, transparent);
-            z-index: 1;
-            transform: translateY(-50%);
-            pointer-events: none;
-            transition: opacity .25s ease;
+        .env-panel-right {
+            right: 0; width: 51%;
+            box-shadow: -8px 0 32px rgba(26,74,46,.09);
+            transition-delay: .06s;
         }
-        .intro-overlay.opening .env-seal { opacity: 0; }
+        .intro-overlay.opening .env-panel-left  { transform: translateX(-102%); }
+        .intro-overlay.opening .env-panel-right { transform: translateX(102%); }
 
         /* Content wrapper (cross, name, button) above panels */
         .intro-content {
@@ -846,7 +874,7 @@
             text-align: center;
             padding: 40px 28px;
             width: 100%; height: 100%;
-            transition: opacity .4s ease .1s;
+            transition: opacity .35s ease .05s;
         }
         .intro-overlay.opening .intro-content { opacity: 0; }
 
@@ -898,6 +926,32 @@
             55%      { box-shadow: 0 6px 28px rgba(201,149,10,.28), 0 0 0 18px rgba(201,149,10,0); }
         }
 
+        /* ── SECTION NAV ARROWS ────────────────────────────────── */
+        .sec-arrow {
+            position: absolute;
+            bottom: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 46px; height: 46px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(201,149,10,.45);
+            background: rgba(255,255,255,.55);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            color: var(--gold-dark);
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background .3s, border-color .3s, transform .3s;
+            animation: bounce 2.2s ease-in-out 1s infinite;
+            -webkit-tap-highlight-color: transparent;
+            z-index: 10;
+        }
+        .sec-arrow:hover {
+            background: rgba(201,149,10,.15);
+            border-color: var(--gold);
+        }
+        .sec-arrow svg { pointer-events: none; }
+
         /* ── ENHANCED REVEALS ──────────────────────────────────── */
         .reveal-left {
             opacity: 0; transform: translateX(-28px);
@@ -947,12 +1001,10 @@
 <!-- ═══════════════════════════════════════════════════════════════ INTRO -->
 <div class="intro-overlay" id="intro-overlay">
 
-    <!-- Panel superior del sobre -->
-    <div class="env-panel env-panel-top"></div>
-    <!-- Panel inferior del sobre -->
-    <div class="env-panel env-panel-bottom"></div>
-    <!-- Línea dorada de sello -->
-    <div class="env-seal"></div>
+    <!-- Cortina izquierda -->
+    <div class="env-panel env-panel-left"></div>
+    <!-- Cortina derecha -->
+    <div class="env-panel env-panel-right"></div>
 
     <!-- Contenido visible (encima de los paneles) -->
     <div class="intro-content">
@@ -1050,7 +1102,11 @@
         </div>
     </div>
 
-    <div class="scroll-hint">↓ &nbsp; Ver detalles &nbsp; ↓</div>
+    <button class="sec-arrow" onclick="scrollToSection('message')" aria-label="Ver mensaje">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+        </svg>
+    </button>
 </section>
 
 <!-- ═════════════════════════════════════════════════════════ MESSAGE -->
@@ -1071,6 +1127,12 @@
         el Cuerpo de Cristo, compartiendo con nosotros este regalo del cielo.
     </p>
     <p class="bible-ref reveal reveal-d3">"Yo soy el pan de vida. El que viene a mí no tendrá hambre." — Juan 6:35</p>
+
+    <button class="sec-arrow" onclick="scrollToSection('events')" aria-label="Ver eventos">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+        </svg>
+    </button>
 </section>
 
 <!-- ══════════════════════════════════════════════════════════ EVENTS -->
@@ -1160,6 +1222,11 @@
 
         </div>
     </div>
+    <button class="sec-arrow" onclick="scrollToSection('countdown')" aria-label="Ver cuenta regresiva">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+        </svg>
+    </button>
 </section>
 
 <!-- ══════════════════════════════════════════════════════ COUNTDOWN -->
@@ -1173,6 +1240,12 @@
         <div class="cd-box reveal reveal-d3"><div class="cd-num" id="cd-mins">--</div><div class="cd-label">Minutos</div></div>
         <div class="cd-box reveal reveal-d4"><div class="cd-num" id="cd-secs">--</div><div class="cd-label">Segundos</div></div>
     </div>
+
+    <button class="sec-arrow" onclick="scrollToSection('rsvp')" aria-label="Confirmar asistencia">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+        </svg>
+    </button>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════ RSVP -->
@@ -1322,6 +1395,12 @@ async function submitRSVP() {
     // Mostrar confirmación
     document.getElementById('form-body').style.display  = 'none';
     document.getElementById('success-box').style.display = 'block';
+}
+
+// ── Navegación entre secciones ───────────────────────────────────────
+function scrollToSection(id) {
+    var el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // ── Countdown ────────────────────────────────────────────────────────
