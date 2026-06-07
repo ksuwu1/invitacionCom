@@ -430,9 +430,17 @@
             box-shadow: 0 0 0 3px rgba(112,191,127,.18);
         }
 
-        .counter-box .field-label {
-            text-align: center;
-            margin-bottom: 12px;
+        .counter-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--brown);
+            margin-bottom: 10px;
         }
 
         .counter-controls {
@@ -603,16 +611,26 @@
 
         /* Móvil (≤ 480px) */
         @media (max-width: 480px) {
-            .hero { padding: 76px 18px 68px; }
+            /* Hero cabe en el viewport sin scroll */
+            .hero {
+                padding: 54px 18px 54px;
+                min-height: 100svh;
+                min-height: 100vh; /* fallback */
+            }
 
-            .corner { width: 52px; height: 52px; opacity: .2; }
+            .corner { width: 48px; height: 48px; opacity: .25; }
             .corner-tl { top: 10px; left: 10px; }
             .corner-tr { top: 10px; right: 10px; }
             .corner-bl { bottom: 10px; left: 10px; }
             .corner-br { bottom: 10px; right: 10px; }
 
-            .hero-eyebrow { letter-spacing: .24em; margin-bottom: 12px; }
-            .scroll-hint  { letter-spacing: .18em; font-size: .65rem; }
+            .hero-eyebrow { letter-spacing: .2em; margin-bottom: 8px; font-size: .7rem; }
+            .hero-cross   { margin-bottom: 8px; width: 36px; height: 50px; }
+            .hero-title   { font-size: 1.35rem; margin-bottom: 2px; }
+            .hero-name    { font-size: clamp(2.6rem, 10vw, 3.8rem); margin: 8px 0; }
+            .hero-date    { font-size: .88rem; margin-top: 8px; }
+            .hero-family  { margin-top: 16px; }
+            .scroll-hint  { letter-spacing: .15em; font-size: .62rem; bottom: 18px; }
 
             .message-section,
             .countdown-section,
@@ -647,15 +665,12 @@
             /* Contadores: crecen para ocupar el espacio bien */
             .counters-row { gap: 10px; margin-top: 4px; }
             .counter-box  { padding: 14px 8px; }
-            .counter-box .field-label {
-                font-size: .65rem;
-                letter-spacing: .06em;
-                gap: 4px;
-            }
 
             /* Botones táctiles cómodos */
-            .counter-btn { width: 46px; height: 46px; font-size: 1.45rem; }
-            .counter-val { font-size: 1.75rem; min-width: 28px; }
+            .counter-label { font-size: .65rem; letter-spacing: .05em; gap: 4px; margin-bottom: 8px; }
+            .counter-controls { gap: 10px; }
+            .counter-btn { width: 42px; height: 42px; font-size: 1.3rem; }
+            .counter-val { font-size: 1.6rem; min-width: 26px; }
 
             .submit-btn { padding: 16px; font-size: .88rem; letter-spacing: .08em; margin-top: 12px; }
 
@@ -680,10 +695,12 @@
             .event-card { padding: 22px 14px; }
 
             /* Form en pantallas muy pequeñas */
-            .rsvp-card { padding: 24px 14px 20px; }
-            .counter-btn { width: 42px; height: 42px; font-size: 1.3rem; }
-            .counter-val { font-size: 1.5rem; }
+            .rsvp-card { padding: 22px 12px 20px; }
             .counters-row { gap: 8px; }
+            .counter-box  { padding: 12px 6px; }
+            .counter-controls { gap: 8px; }
+            .counter-btn { width: 38px; height: 38px; font-size: 1.2rem; }
+            .counter-val { font-size: 1.4rem; min-width: 24px; }
         }
 
         /* ── MÚSICA DE FONDO ───────────────────────────────────── */
@@ -875,7 +892,7 @@
     <div class="section-eyebrow reveal">Confirmación de asistencia</div>
     <div class="section-title reveal reveal-d1">¿Nos acompañas?</div>
     <p class="rsvp-deadline reveal reveal-d2">
-         <strong> CONFIRMA TU ASISTENCIA A CONTINUACIÓN: </strong>
+        Por favor confirma tu asistencia antes del <strong>15 de Julio de 2026</strong>
     </p>
 
     <div class="rsvp-card reveal reveal-d3">
@@ -1097,6 +1114,15 @@ setInterval(tick, 1000);
     audio.play()
          .then(function () { played = true; })
          .catch(function () { /* bloqueado — se activará al primer toque */ });
+
+    // Pausar al cambiar de pestaña / minimizar; reanudar al volver
+    document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'hidden') {
+            audio.pause();
+        } else if (document.visibilityState === 'visible' && played) {
+            audio.play().catch(function () {});
+        }
+    });
 }());
 
 // ── Reveal on scroll ─────────────────────────────────────────────
