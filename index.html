@@ -703,10 +703,117 @@
             .counter-val { font-size: 1.4rem; min-width: 24px; }
         }
 
+        /* ── INTRO OVERLAY ─────────────────────────────────────── */
+        .intro-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: linear-gradient(160deg, #FFFFFF 0%, #EAF8EE 40%, #D8F5DE 70%, #F0FBF2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 28px;
+            transition: opacity .9s ease;
+        }
+        .intro-overlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .intro-eyebrow {
+            font-family: 'Lato', sans-serif;
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: .36em;
+            text-transform: uppercase;
+            color: var(--mint-mid);
+            margin-bottom: 14px;
+        }
+        .intro-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(3.2rem, 13vw, 5rem);
+            color: var(--gold);
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+        .intro-date {
+            font-family: 'Playfair Display', serif;
+            font-size: .85rem;
+            color: var(--brown);
+            opacity: .65;
+            letter-spacing: .06em;
+            margin-bottom: 48px;
+        }
+        .intro-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, #5A3F00, var(--gold-dark));
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-family: 'Lato', sans-serif;
+            font-size: .88rem;
+            font-weight: 700;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 6px 28px rgba(201,149,10,.28);
+            animation: pulse-btn 2.4s ease-in-out infinite;
+            -webkit-tap-highlight-color: transparent;
+        }
+        @keyframes pulse-btn {
+            0%,100% { box-shadow: 0 6px 28px rgba(201,149,10,.28), 0 0 0 0 rgba(201,149,10,.25); }
+            55%      { box-shadow: 0 6px 28px rgba(201,149,10,.28), 0 0 0 18px rgba(201,149,10,0); }
+        }
+
         /* ── MÚSICA DE FONDO ───────────────────────────────────── */
     </style>
 </head>
 <body>
+
+<!-- ═══════════════════════════════════════════════════════════════ INTRO -->
+<div class="intro-overlay" id="intro-overlay">
+    <svg class="corner corner-tl" viewBox="0 0 100 100" fill="none">
+        <path d="M8 92 L8 8 L92 8" stroke="#C9950A" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M18 92 L18 18 L92 18" stroke="#C9950A" stroke-width="1" stroke-linecap="round" opacity=".45"/>
+        <circle cx="8" cy="8" r="4.5" fill="#C9950A"/>
+    </svg>
+    <svg class="corner corner-tr" viewBox="0 0 100 100" fill="none">
+        <path d="M8 92 L8 8 L92 8" stroke="#C9950A" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M18 92 L18 18 L92 18" stroke="#C9950A" stroke-width="1" stroke-linecap="round" opacity=".45"/>
+        <circle cx="8" cy="8" r="4.5" fill="#C9950A"/>
+    </svg>
+    <svg class="corner corner-bl" viewBox="0 0 100 100" fill="none">
+        <path d="M8 92 L8 8 L92 8" stroke="#C9950A" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M18 92 L18 18 L92 18" stroke="#C9950A" stroke-width="1" stroke-linecap="round" opacity=".45"/>
+        <circle cx="8" cy="8" r="4.5" fill="#C9950A"/>
+    </svg>
+    <svg class="corner corner-br" viewBox="0 0 100 100" fill="none">
+        <path d="M8 92 L8 8 L92 8" stroke="#C9950A" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M18 92 L18 18 L92 18" stroke="#C9950A" stroke-width="1" stroke-linecap="round" opacity=".45"/>
+        <circle cx="8" cy="8" r="4.5" fill="#C9950A"/>
+    </svg>
+
+    <svg width="44" height="62" viewBox="0 0 52 72" fill="none" style="margin-bottom:22px">
+        <rect x="21" y="0"  width="10" height="72" rx="3" fill="#C9950A"/>
+        <rect x="0"  y="18" width="52" height="10" rx="3" fill="#C9950A"/>
+        <rect x="22" y="1"  width="8"  height="70" rx="2" fill="rgba(255,255,255,.18)"/>
+    </svg>
+
+    <div class="intro-eyebrow">Con la gracia de Dios</div>
+    <div class="intro-name">Erick Abraham</div>
+    <div class="intro-date">Primera Comunión &nbsp;·&nbsp; 25 de Julio, 2026</div>
+
+    <button class="intro-btn" onclick="openInvitation()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="rgba(255,255,255,.85)" stroke="none">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+        </svg>
+        Abrir Invitación
+    </button>
+</div>
 
 <!-- ═══════════════════════════════════════════════════════════════ HERO -->
 <section class="hero">
@@ -1080,50 +1187,39 @@ setInterval(tick, 1000);
 }());
 
 // ── Música de fondo ──────────────────────────────────────────────
-(function () {
-    var audio  = document.getElementById('bg-audio');
-    var played = false;
+var _bgAudio  = document.getElementById('bg-audio');
+var _bgPlayed = false;
+_bgAudio.volume = 0.18;
 
-    audio.volume = 0.18;
+_bgAudio.addEventListener('loadedmetadata', function () {
+    _bgAudio.currentTime = 30;
+}, { once: true });
 
-    // Posicionar en el segundo 30 en cuanto los metadatos estén listos
-    audio.addEventListener('loadedmetadata', function () {
-        audio.currentTime = 30;
-    }, { once: true });
-
-    function startMusic() {
-        if (played) return;
-        // Asegurar posición si los metadatos ya cargaron
-        if (audio.readyState >= 1 && audio.currentTime < 29) {
-            audio.currentTime = 30;
-        }
-        audio.play()
-             .then(function () { played = true; })
-             .catch(function () {
-                 // El navegador rechazó — los listeners siguen activos para el próximo toque
-             });
+function openInvitation() {
+    var overlay = document.getElementById('intro-overlay');
+    if (overlay) {
+        overlay.classList.add('fade-out');
+        setTimeout(function () {
+            if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        }, 1000);
     }
+    if (_bgPlayed) return;
+    if (_bgAudio.readyState >= 1 && _bgAudio.currentTime < 29) {
+        _bgAudio.currentTime = 30;
+    }
+    _bgAudio.play()
+             .then(function () { _bgPlayed = true; })
+             .catch(function () {});
+}
 
-    // click y touchstart son gestos de usuario válidos en todos los navegadores
-    // (scroll NO es aceptado por Chrome mobile para desbloquear autoplay)
-    ['click', 'touchstart'].forEach(function (ev) {
-        document.addEventListener(ev, startMusic, { passive: true });
-    });
-
-    // También intentar autoplay directo al cargar
-    audio.play()
-         .then(function () { played = true; })
-         .catch(function () { /* bloqueado — se activará al primer toque */ });
-
-    // Pausar al cambiar de pestaña / minimizar; reanudar al volver
-    document.addEventListener('visibilitychange', function () {
-        if (document.visibilityState === 'hidden') {
-            audio.pause();
-        } else if (document.visibilityState === 'visible' && played) {
-            audio.play().catch(function () {});
-        }
-    });
-}());
+// Pausar al cambiar de pestaña / minimizar; reanudar al volver
+document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') {
+        _bgAudio.pause();
+    } else if (document.visibilityState === 'visible' && _bgPlayed) {
+        _bgAudio.play().catch(function () {});
+    }
+});
 
 // ── Reveal on scroll ─────────────────────────────────────────────
 (function () {
