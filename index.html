@@ -25,6 +25,7 @@
         html {
             scroll-behavior: smooth;
             scroll-snap-type: y mandatory;
+            overflow-x: hidden;
         }
 
         /* En móvil el mandatory-snap choca con la barra del browser */
@@ -253,7 +254,7 @@
         /* ── EVENTS ────────────────────────────────────────────── */
         .events-section {
             background: linear-gradient(150deg, #C8EDD0, #D8F5DC 60%, #C0E8CB);
-            padding: 80px 24px 90px;
+            padding: 50px 24px 70px;
             min-height: 100svh;
             min-height: 100vh;
             display: flex;
@@ -261,17 +262,21 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            overflow: hidden;
             scroll-snap-align: start;
+        }
+        #celebration {
+            background: linear-gradient(150deg, #BEE8C5, #D0F2D5 60%, #BAEAC2);
         }
 
         .events-section .section-eyebrow { color: var(--gold-dark); }
-        .events-section .section-title { color: var(--brown); }
+        .events-section .section-title { color: var(--brown); margin-bottom: 22px; }
 
-        .events-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 28px;
-            max-width: 860px;
+        /* Single-card centering wrapper (replaces events-grid) */
+        .event-single-wrap {
+            text-align: center;
+            width: 100%;
+            max-width: 440px;
             margin: 0 auto;
         }
 
@@ -279,18 +284,19 @@
             background: var(--white);
             border: 1px solid rgba(112,191,127,.35);
             border-radius: 18px;
-            padding: 38px 28px;
+            padding: 24px 28px;
             text-align: center;
             transition: transform .3s, border-color .3s;
             display: flex;
             flex-direction: column;
+            width: 100%;
         }
         .event-card:hover {
             transform: translateY(-5px);
             border-color: var(--mint);
         }
 
-        .event-icon { margin-bottom: 20px; }
+        .event-icon { margin-bottom: 12px; }
 
         .event-tag {
             font-size: .68rem;
@@ -298,16 +304,15 @@
             letter-spacing: .42em;
             text-transform: uppercase;
             color: var(--gold-dark);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .event-name {
             font-family: 'Playfair Display', serif;
             font-size: 1.3rem;
             color: var(--brown);
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             line-height: 1.3;
-            min-height: 3.6rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -319,8 +324,8 @@
             gap: 10px;
             font-size: .88rem;
             color: #3D6B4A;
-            line-height: 1.7;
-            margin-bottom: 10px;
+            line-height: 1.6;
+            margin-bottom: 7px;
             text-align: left;
         }
         .event-info svg { flex-shrink: 0; margin-top: 2px; stroke: var(--mint-mid); }
@@ -347,7 +352,7 @@
 
         /* ── COUNTDOWN ─────────────────────────────────────────── */
         .countdown-section {
-            background: var(--cream-dark);
+            background: linear-gradient(160deg, #091C10 0%, #132E1C 45%, #091C10 100%);
             padding: 80px 24px 90px;
             text-align: center;
             min-height: 100svh;
@@ -357,47 +362,116 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            overflow: hidden;
             scroll-snap-align: start;
+        }
+        /* Radial glow backdrop */
+        .cd-glow {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 520px; height: 520px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(201,149,10,.13) 0%, rgba(112,191,127,.07) 40%, transparent 70%);
+            pointer-events: none;
+        }
+        /* Section text overrides for dark bg */
+        .countdown-section .section-eyebrow { color: var(--mint-mid); }
+        .countdown-section .section-title {
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-light) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Corners more subtle on dark */
+        .countdown-section .corner { opacity: .18; }
+        /* Sec-arrow adapted to dark bg */
+        .countdown-section .sec-arrow {
+            background: rgba(201,149,10,.12);
+            border-color: rgba(201,149,10,.5);
+            color: var(--gold-light);
         }
 
         .countdown-row {
             display: flex;
             justify-content: center;
+            align-items: center;
             flex-wrap: wrap;
-            gap: 16px;
-            margin-top: 40px;
+            gap: 10px;
+            margin-top: 36px;
+            margin-bottom: 28px;
         }
 
         .cd-box {
-            background: var(--white);
-            border-radius: 14px;
-            padding: 20px 26px;
-            min-width: 90px;
-            box-shadow: 0 4px 22px rgba(0,0,0,.07);
-            border-top: 3px solid var(--mint);
+            background: rgba(255,255,255,.06);
+            border: 1.5px solid rgba(201,149,10,.28);
+            border-radius: 16px;
+            padding: 22px 28px;
+            min-width: 88px;
+            box-shadow: 0 8px 36px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.07);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .cd-num {
             font-family: 'Playfair Display', serif;
-            font-size: 2.6rem;
+            font-size: 3rem;
             font-weight: 600;
-            color: var(--gold-dark);
+            color: var(--gold-light);
             line-height: 1;
+            text-shadow: 0 0 28px rgba(240,208,96,.55);
         }
 
         .cd-label {
-            font-size: .68rem;
+            font-size: .6rem;
             font-weight: 700;
-            letter-spacing: .22em;
+            letter-spacing: .28em;
             text-transform: uppercase;
-            color: #999;
-            margin-top: 4px;
+            color: rgba(255,255,255,.38);
+            margin-top: 8px;
+        }
+
+        /* Colon separators between boxes */
+        .cd-sep {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: rgba(201,149,10,.4);
+            font-weight: 300;
+            line-height: 1;
+            margin-bottom: 22px; /* compensate for cd-label height */
+            flex-shrink: 0;
+        }
+
+        /* Date below countdown */
+        .cd-date {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1rem;
+            color: rgba(255,255,255,.42);
+            letter-spacing: .05em;
+        }
+
+        /* Ornament line + star */
+        .cd-ornament {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 14px;
+            width: 220px;
+        }
+        .cd-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(201,149,10,.35));
+        }
+        .cd-ornament .cd-line:last-child {
+            background: linear-gradient(to left, transparent, rgba(201,149,10,.35));
         }
 
         /* ── RSVP ──────────────────────────────────────────────── */
         .rsvp-section {
             background: #E4F3E8;
-            padding: 80px 24px;
+            padding: 80px 24px 132px; /* espacio para el footer anclado */
             text-align: center;
             min-height: 100svh;
             min-height: 100vh;
@@ -406,6 +480,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            overflow: hidden;
             scroll-snap-align: start;
         }
 
@@ -580,16 +655,20 @@
             background: linear-gradient(150deg, #C8EDD0, #B5E5BF);
             color: var(--brown);
             text-align: center;
-            padding: 44px 24px;
+            padding: 18px 24px 16px;
+            /* Anclado al fondo de la sección RSVP */
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            width: 100%;
         }
         .footer-name {
             font-family: 'Great Vibes', cursive;
-            font-size: 2.1rem;
+            font-size: 1.55rem;
             color: var(--gold-dark);
-            margin-bottom: 8px;
+            margin-bottom: 3px;
         }
-        footer p { font-size: .82rem; opacity: .8; }
-        footer p + p { margin-top: 6px; }
+        footer p { font-size: .74rem; opacity: .75; line-height: 1.5; }
+        footer p + p { margin-top: 2px; }
 
         /* ── REVEAL ON SCROLL ──────────────────────────────────── */
         .reveal {
@@ -628,16 +707,19 @@
         /* Tablet (≤ 768px) */
         @media (max-width: 768px) {
             .message-section,
-            .countdown-section,
-            .rsvp-section  { padding: 64px 28px; }
+            .countdown-section { padding: 64px 28px; }
+            .rsvp-section  { padding: 64px 28px 132px; }
             .events-section { padding: 64px 28px; }
 
             .corner { width: 78px; height: 78px; }
 
-            .cd-box { padding: 16px 18px; min-width: 76px; }
-            .cd-num { font-size: 2.2rem; }
+            .cd-sep  { font-size: 1.6rem; margin-bottom: 18px; }
+            .cd-box  { padding: 16px 18px; min-width: 76px; }
+            .cd-num  { font-size: 2.2rem; }
 
             .rsvp-card { padding: 36px 28px; }
+
+            .event-single-wrap { max-width: 100%; }
         }
 
         /* Móvil grande (≤ 600px) */
@@ -666,9 +748,9 @@
             .message-section,
             .events-section,
             .countdown-section { min-height: 100dvh; min-height: 100svh; min-height: 100vh;
-                                  padding: 60px 20px 82px; }
+                                  padding: 60px 18px 80px; }
             .rsvp-section { min-height: 100dvh; min-height: 100svh; min-height: 100vh;
-                             padding: 56px 18px 82px; }
+                             padding: 56px 18px 132px; }
 
             /* Esquinas más pequeñas */
             .corner { width: 52px; height: 52px; opacity: .28; }
@@ -717,12 +799,15 @@
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 max-width: 280px;
-                margin: 32px auto 0;
-                gap: 14px;
+                margin: 28px auto 20px;
+                gap: 12px;
             }
+            .cd-sep   { display: none; } /* colons not visible in 2×2 grid */
             .cd-box   { padding: 16px 10px; min-width: 0; }
             .cd-num   { font-size: 2.3rem; }
-            .cd-label { letter-spacing: .14em; font-size: .76rem; }
+            .cd-label { letter-spacing: .14em; font-size: .72rem; }
+            .cd-date  { font-size: .9rem; }
+            .cd-ornament { width: 180px; }
 
             /* RSVP form */
             .rsvp-deadline { font-size: .95rem; margin-bottom: 28px; }
@@ -749,8 +834,8 @@
 
             .message-section,
             .events-section,
-            .countdown-section,
-            .rsvp-section { padding: 52px 16px 80px; }
+            .countdown-section { padding: 52px 16px 80px; }
+            .rsvp-section { padding: 52px 16px 132px; }
 
             .event-card { padding: 24px 14px; }
 
@@ -840,26 +925,33 @@
         }
         @media (max-width: 768px) {
             #section-nav {
-                right: auto; top: auto;
-                bottom: 16px;
-                left: 50%;
-                transform: translateX(-50%);
-                flex-direction: row;
-                gap: 10px;
-                background: rgba(255,255,255,.75);
-                backdrop-filter: blur(8px);
-                -webkit-backdrop-filter: blur(8px);
-                padding: 7px 14px;
-                border-radius: 50px;
-                border: 1px solid rgba(201,149,10,.2);
+                /* Lado derecho, vertical — igual que desktop pero más pegado al borde */
+                right: 12px;
+                top: 50%;
+                transform: translateY(-50%);
+                flex-direction: column;
+                gap: 11px;
+                background: none;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                padding: 0;
+                border-radius: 0;
+                border: none;
             }
+            .nav-dot { width: 7px; height: 7px; }
+            .nav-dot.active { width: 9px; height: 9px; }
             .nav-dot::before { display: none; }
         }
 
         /* ── ENVELOPE INTRO OVERLAY ────────────────────────────── */
         .intro-overlay {
             position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
             inset: 0;
+            width: 100%;
+            height: 100dvh;
+            height: 100svh;
+            height: 100vh;
             z-index: 9999;
             overflow: hidden;
         }
@@ -872,28 +964,29 @@
             transition: transform 1.05s cubic-bezier(0.85, 0, 0.15, 1);
         }
         .env-panel-left {
-            left: 0; width: 51%;
+            left: 0; right: auto; width: 51%;
             box-shadow: 8px 0 32px rgba(26,74,46,.09);
         }
         .env-panel-right {
-            right: 0; width: 51%;
+            right: 0; left: auto; width: 51%;
             box-shadow: -8px 0 32px rgba(26,74,46,.09);
             transition-delay: .06s;
         }
         .intro-overlay.opening .env-panel-left  { transform: translateX(-102%); }
         .intro-overlay.opening .env-panel-right { transform: translateX(102%); }
 
-        /* Content wrapper (cross, name, button) above panels */
+        /* Content wrapper — position:absolute+inset:0 garantiza que llena el overlay en todos los browsers */
         .intro-content {
-            position: relative;
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            inset: 0;
             z-index: 2;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 40px 28px;
-            width: 100%; height: 100%;
+            padding: 40px 28px 80px;
             transition: opacity .35s ease .05s;
         }
         .intro-overlay.opening .intro-content { opacity: 0; }
@@ -1011,11 +1104,12 @@
 <div id="scroll-progress"></div>
 
 <nav id="section-nav" aria-label="Secciones">
-    <a class="nav-dot active" href="#hero"      data-label="Inicio"           aria-label="Inicio"></a>
-    <a class="nav-dot"        href="#message"   data-label="Mensaje"          aria-label="Mensaje"></a>
-    <a class="nav-dot"        href="#events"    data-label="Eventos"          aria-label="Eventos"></a>
-    <a class="nav-dot"        href="#countdown" data-label="Cuenta Regresiva" aria-label="Cuenta Regresiva"></a>
-    <a class="nav-dot"        href="#rsvp"      data-label="Confirmar"        aria-label="Confirmar"></a>
+    <a class="nav-dot active" href="#hero"         data-label="Inicio"           aria-label="Inicio"></a>
+    <a class="nav-dot"        href="#message"      data-label="Mensaje"          aria-label="Mensaje"></a>
+    <a class="nav-dot"        href="#misa"         data-label="Misa"             aria-label="Misa"></a>
+    <a class="nav-dot"        href="#celebration"  data-label="Celebración"      aria-label="Celebración"></a>
+    <a class="nav-dot"        href="#countdown"    data-label="Cuenta Regresiva" aria-label="Cuenta Regresiva"></a>
+    <a class="nav-dot"        href="#rsvp"         data-label="Confirmar"        aria-label="Confirmar"></a>
 </nav>
 
 <!-- ═══════════════════════════════════════════════════════════════ INTRO -->
@@ -1149,98 +1243,104 @@
     </p>
     <p class="bible-ref reveal reveal-d3">"Yo soy el pan de vida. El que viene a mí no tendrá hambre." — Juan 6:35</p>
 
-    <button class="sec-arrow" onclick="scrollToSection('events')" aria-label="Ver eventos">
+    <button class="sec-arrow" onclick="scrollToSection('misa')" aria-label="Ver misa">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="6 9 12 15 18 9"/>
         </svg>
     </button>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════ EVENTS -->
-<section class="events-section" id="events">
-    <div style="text-align:center; max-width:860px; margin:0 auto;">
-        <div class="section-eyebrow reveal">Los eventos</div>
-        <div class="section-title reveal reveal-d1">Acompáñanos</div>
+<!-- ════════════════════════════════════════════════════════════ MISA -->
+<section class="events-section" id="misa">
+    <div class="event-single-wrap">
+        <div class="section-eyebrow reveal">Los eventos &nbsp;·&nbsp; 1 de 2</div>
+        <div class="section-title reveal reveal-d1">La Misa</div>
 
-        <div class="events-grid">
-
-            <!-- Misa -->
-            <div class="event-card reveal reveal-d2">
-                <div class="event-icon">
-                    <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
-                        <rect x="22" y="2"  width="8" height="48" rx="2.5" fill="#C9950A"/>
-                        <rect x="6"  y="16" width="40" height="8"  rx="2.5" fill="#C9950A"/>
-                        <ellipse cx="26" cy="47" rx="8" ry="5" fill="#C9950A" opacity=".25"/>
-                        <circle cx="26" cy="44" r="5" fill="none" stroke="#C9950A" stroke-width="1.5"/>
-                    </svg>
-                </div>
-                <div class="event-tag">Santa Misa</div>
-                <div class="event-name">Parroquia La Transfiguración<br>del Señor</div>
-                <div class="event-info">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9950A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="4" width="18" height="18" rx="2.5"/><line x1="3" y1="9" x2="21" y2="9"/>
-                        <line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/>
-                    </svg>
-                    <strong>Sábado 25 de Julio, 2026</strong>
-                </div>
-                <div class="event-info">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9950A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14.5"/>
-                    </svg>
-                    10:00 AM
-                </div>
-                <div class="event-info">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9950A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-                    </svg>
-                    <span>Av. Salud 202, José Guadalupe<br>Peralta Gámez, 20196<br>Aguascalientes, Ags.</span>
-                </div>
-                <a href="https://maps.app.goo.gl/BbzSXUoGpzyLrk7Y7" target="_blank" rel="noopener" class="map-btn">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                    </svg>
-                    Ver en mapa
-                </a>
+        <div class="event-card reveal reveal-d2">
+            <div class="event-icon">
+                <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+                    <rect x="22" y="2"  width="8" height="48" rx="2.5" fill="#C9950A"/>
+                    <rect x="6"  y="16" width="40" height="8"  rx="2.5" fill="#C9950A"/>
+                    <ellipse cx="26" cy="47" rx="8" ry="5" fill="#C9950A" opacity=".25"/>
+                    <circle cx="26" cy="44" r="5" fill="none" stroke="#C9950A" stroke-width="1.5"/>
+                </svg>
             </div>
-
-            <!-- Fiesta -->
-            <div class="event-card reveal reveal-d3">
-                <div class="event-icon">
-                    <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
-                        <path d="M26 6 L30 20 L44 20 L33 29 L37 43 L26 34 L15 43 L19 29 L8 20 L22 20 Z" fill="#C9950A"/>
-                        <circle cx="26" cy="26" r="23" stroke="#C9950A" stroke-width="1.2" fill="none" opacity=".3"/>
-                    </svg>
-                </div>
-                <div class="event-tag">Celebración</div>
-                <div class="event-name">Rancho Karolin</div>
-                <div class="event-info">
-                    <!-- Fecha: ajusta si es diferente a 26 de julio -->
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9950A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="4" width="18" height="18" rx="2.5"/><line x1="3" y1="9" x2="21" y2="9"/>
-                        <line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/>
-                    </svg>
-                    <strong>Domingo 26 de Julio, 2026</strong>
-                </div>
-                <div class="event-info">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9950A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14.5"/>
-                    </svg>
-                    A partir de las 2:00 PM
-                </div>
-                <div class="event-info">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9950A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-                    </svg>
-                    <span>Profr. Enrique Olivares Santana 214,<br>El Dorado 1a Sección, 20235<br>Aguascalientes, Ags.</span>
-                </div>
-                <a href="https://maps.app.goo.gl/JgTSRdxrjXYpTR1D7" target="_blank" rel="noopener" class="map-btn">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                    </svg>
-                    Ver en mapa
-                </a>
+            <div class="event-tag">Santa Misa</div>
+            <div class="event-name">Parroquia La Transfiguración<br>del Señor</div>
+            <div class="event-info">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9950A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2.5"/><line x1="3" y1="9" x2="21" y2="9"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/>
+                </svg>
+                <strong>Sábado 25 de Julio, 2026</strong>
             </div>
+            <div class="event-info">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9950A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14.5"/>
+                </svg>
+                10:00 AM
+            </div>
+            <div class="event-info">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9950A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                </svg>
+                <span>Av. Salud 202, José Guadalupe<br>Peralta Gámez, 20196<br>Aguascalientes, Ags.</span>
+            </div>
+            <a href="https://maps.app.goo.gl/BbzSXUoGpzyLrk7Y7" target="_blank" rel="noopener" class="map-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+                Ver en mapa
+            </a>
+        </div>
+    </div>
+    <button class="sec-arrow" onclick="scrollToSection('celebration')" aria-label="Ver celebración">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+        </svg>
+    </button>
+</section>
 
+<!-- ══════════════════════════════════════════════════════ CELEBRACIÓN -->
+<section class="events-section" id="celebration">
+    <div class="event-single-wrap">
+        <div class="section-eyebrow reveal">Los eventos &nbsp;·&nbsp; 2 de 2</div>
+        <div class="section-title reveal reveal-d1">La Celebración</div>
+
+        <div class="event-card reveal reveal-d2">
+            <div class="event-icon">
+                <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+                    <path d="M26 6 L30 20 L44 20 L33 29 L37 43 L26 34 L15 43 L19 29 L8 20 L22 20 Z" fill="#C9950A"/>
+                    <circle cx="26" cy="26" r="23" stroke="#C9950A" stroke-width="1.2" fill="none" opacity=".3"/>
+                </svg>
+            </div>
+            <div class="event-tag">Celebración</div>
+            <div class="event-name">Rancho Karolin</div>
+            <div class="event-info">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9950A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2.5"/><line x1="3" y1="9" x2="21" y2="9"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/>
+                </svg>
+                <strong>Domingo 26 de Julio, 2026</strong>
+            </div>
+            <div class="event-info">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9950A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14.5"/>
+                </svg>
+                A partir de las 2:00 PM
+            </div>
+            <div class="event-info">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C9950A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                </svg>
+                <span>Profr. Enrique Olivares Santana 214,<br>El Dorado 1a Sección, 20235<br>Aguascalientes, Ags.</span>
+            </div>
+            <a href="https://maps.app.goo.gl/JgTSRdxrjXYpTR1D7" target="_blank" rel="noopener" class="map-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+                Ver en mapa
+            </a>
         </div>
     </div>
     <button class="sec-arrow" onclick="scrollToSection('countdown')" aria-label="Ver cuenta regresiva">
@@ -1252,14 +1352,73 @@
 
 <!-- ══════════════════════════════════════════════════════ COUNTDOWN -->
 <section class="countdown-section" id="countdown">
+
+    <!-- Corner decorations -->
+    <svg class="corner corner-tl" viewBox="0 0 100 100" fill="none">
+        <path d="M8 92 L8 8 L92 8" stroke="#C9950A" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M18 92 L18 18 L92 18" stroke="#C9950A" stroke-width="1" stroke-linecap="round" opacity=".45"/>
+        <circle cx="8" cy="8" r="4.5" fill="#C9950A"/>
+    </svg>
+    <svg class="corner corner-tr" viewBox="0 0 100 100" fill="none">
+        <path d="M8 92 L8 8 L92 8" stroke="#C9950A" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M18 92 L18 18 L92 18" stroke="#C9950A" stroke-width="1" stroke-linecap="round" opacity=".45"/>
+        <circle cx="8" cy="8" r="4.5" fill="#C9950A"/>
+    </svg>
+    <svg class="corner corner-bl" viewBox="0 0 100 100" fill="none">
+        <path d="M8 92 L8 8 L92 8" stroke="#C9950A" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M18 92 L18 18 L92 18" stroke="#C9950A" stroke-width="1" stroke-linecap="round" opacity=".45"/>
+        <circle cx="8" cy="8" r="4.5" fill="#C9950A"/>
+    </svg>
+    <svg class="corner corner-br" viewBox="0 0 100 100" fill="none">
+        <path d="M8 92 L8 8 L92 8" stroke="#C9950A" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M18 92 L18 18 L92 18" stroke="#C9950A" stroke-width="1" stroke-linecap="round" opacity=".45"/>
+        <circle cx="8" cy="8" r="4.5" fill="#C9950A"/>
+    </svg>
+
+    <!-- Radial glow -->
+    <div class="cd-glow"></div>
+
+    <!-- Cross icon -->
+    <svg width="36" height="50" viewBox="0 0 52 72" fill="none" style="margin-bottom:18px;opacity:.55">
+        <rect x="21" y="0"  width="10" height="72" rx="3" fill="#C9950A"/>
+        <rect x="0"  y="18" width="52" height="10" rx="3" fill="#C9950A"/>
+    </svg>
+
     <div class="section-eyebrow reveal">El gran día se acerca</div>
     <div class="section-title reveal reveal-d1">Cuenta Regresiva</div>
 
     <div class="countdown-row" id="countdown-row">
-        <div class="cd-box reveal reveal-d1"><div class="cd-num" id="cd-days">--</div><div class="cd-label">Días</div></div>
-        <div class="cd-box reveal reveal-d2"><div class="cd-num" id="cd-hours">--</div><div class="cd-label">Horas</div></div>
-        <div class="cd-box reveal reveal-d3"><div class="cd-num" id="cd-mins">--</div><div class="cd-label">Minutos</div></div>
-        <div class="cd-box reveal reveal-d4"><div class="cd-num" id="cd-secs">--</div><div class="cd-label">Segundos</div></div>
+        <div class="cd-box reveal reveal-d1">
+            <div class="cd-num" id="cd-days">--</div>
+            <div class="cd-label">Días</div>
+        </div>
+        <div class="cd-sep">:</div>
+        <div class="cd-box reveal reveal-d2">
+            <div class="cd-num" id="cd-hours">--</div>
+            <div class="cd-label">Horas</div>
+        </div>
+        <div class="cd-sep">:</div>
+        <div class="cd-box reveal reveal-d3">
+            <div class="cd-num" id="cd-mins">--</div>
+            <div class="cd-label">Minutos</div>
+        </div>
+        <div class="cd-sep">:</div>
+        <div class="cd-box reveal reveal-d4">
+            <div class="cd-num" id="cd-secs">--</div>
+            <div class="cd-label">Segundos</div>
+        </div>
+    </div>
+
+    <!-- Date label -->
+    <div class="cd-date reveal reveal-d3">Sábado 25 de Julio, 2026 &nbsp;·&nbsp; 10:00 AM</div>
+
+    <!-- Ornament divider -->
+    <div class="cd-ornament reveal reveal-d4">
+        <div class="cd-line"></div>
+        <svg width="10" height="10" viewBox="0 0 12 12" fill="rgba(201,149,10,.5)">
+            <path d="M6 0L7.5 4.5H12L8.5 7.3L9.9 12L6 9.2L2.1 12L3.5 7.3L0 4.5H4.5L6 0Z"/>
+        </svg>
+        <div class="cd-line"></div>
     </div>
 
     <button class="sec-arrow" onclick="scrollToSection('rsvp')" aria-label="Confirmar asistencia">
@@ -1347,14 +1506,14 @@
         </div>
 
     </div>
-</section>
 
-<!-- ══════════════════════════════════════════════════════════ FOOTER -->
-<footer>
-    <div class="footer-name">Erick Abraham</div>
-    <p>Primera Comunión &nbsp;·&nbsp; 25 de Julio, 2026</p>
-    <p style="margin-top:10px;">Con amor y fe ✝</p>
-</footer>
+    <!-- Footer anclado al fondo de la sección RSVP -->
+    <footer>
+        <div class="footer-name">Erick Abraham</div>
+        <p>Primera Comunión &nbsp;·&nbsp; 25 de Julio, 2026</p>
+        <p>Con amor y fe ✝</p>
+    </footer>
+</section>
 
 <audio id="bg-audio" loop preload="metadata">
     <source src="song.mp3" type="audio/mpeg">
@@ -1510,7 +1669,7 @@ function openInvitation() {
 
 // Section nav: highlight active dot
 (function () {
-    var sections = ['hero','message','events','countdown','rsvp'];
+    var sections = ['hero','message','misa','celebration','countdown','rsvp'];
     var dots = {};
     sections.forEach(function (id) {
         var el = document.getElementById(id);
